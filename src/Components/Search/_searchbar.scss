@@ -1,0 +1,109 @@
+.search{
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  padding: 0.5em 1em;
+  margin: 0 auto 2em;
+  display: grid;
+  grid-template-columns: 3fr 1.5fr;
+  grid-gap: 1em;
+  align-items: center;
+  .search-input {
+    border: none;
+    border-radius: 10px;
+    padding: 0 1em;
+    box-shadow: var(--box-shadow);
+    height: 100%;
+    font-size: 16px;
+    &::placeholder{
+      font-size: 12px;
+    }
+  }
+  .btn-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.5em;
+    .search-btn[data-mode="mobile"]{
+      @include svg-adjust(auto, 20px, var(--white));
+      padding: 0.4em 1em;
+      background-color: var(--green-250);
+      font-size: 16px;
+      box-shadow: var(--box-shadow);
+      border-radius: 10px;
+      &:hover{
+        background-color: var(--green-300);
+      }
+    }
+    .search-btn[data-mode="desktop"] {
+      display: none;
+    }
+    .current-location-btn[data-mode="mobile"]{
+      @include svg-adjust(auto, 20px, var(--white));
+      padding: 0.4em 1em;
+      background-color: var(--green-250);
+      box-shadow: var(--box-shadow);
+      border-radius: 10px;
+    
+      &:hover {
+        background-color: var(--green-300);
+      }
+    }
+    .current-location-btn[data-mode="desktop"] {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: 560px) {
+  .search {
+    height: 55px;
+    line-height: 55px;
+    .search-input {
+      font-size: 18px;
+      &::placeholder {
+        font-size: 14px;
+      }
+    }
+    .btn-group {
+      grid-template-columns: 1fr 1.5fr;
+      height: 55px;
+      line-height: 55px;
+
+      .search-btn[data-mode="mobile"] {
+        display: none;
+      }
+      .search-btn[data-mode="desktop"] {
+        display: block;
+        padding: 0.4em 1em;
+        background-color: var(--green-250);
+        color: var(--white);
+        font-size: 18px;
+        box-shadow: var(--box-shadow);
+        border-radius: 10px;
+
+        &:hover {
+          background-color: var(--green-300);
+        }
+      }
+      .current-location-btn[data-mode="mobile"] {
+        display: none;
+      }
+      .current-location-btn[data-mode="desktop"] {
+        display: block;
+        padding: 0.4em 1em;
+        background-color: var(--green-250);
+        color: var(--white);
+        font-size: 18px;
+        box-shadow: var(--box-shadow);
+        border-radius: 10px;
+        &:hover {
+          background-color: var(--green-300);
+        }
+      }
+    }
+  }
+}
+
+// @media screen and (min-width: 768px) {
+  
+// }

@@ -1,0 +1,64 @@
+.parking-item {
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // background-color: var(--white);
+  &:hover{
+    background-color: var(--grey-50);
+  }
+
+  .parking-info {
+    .address {
+      padding-bottom: 0.2em;
+      .parking-detail{
+        @include svg-adjust(auto, 16px, var(--black-80));
+        &:hover{
+          @include svg-adjust(auto, 16px, var(--black-100));
+        }
+      }
+    }
+
+    .space {
+      margin-left: 1.2rem;
+      padding-top: 0.4em;
+      padding-bottom: 0.35em;
+
+      .car,
+      .motor {
+        list-style-type: circle;
+      }
+
+      .car {
+        margin-bottom: 0.35em;
+      }
+    }
+
+    .other-info {
+      span {
+        &.handicap {
+          margin-left: 0.8em;
+        }
+
+        .icon {
+          margin-right: 0.2em;
+          @include svg-adjust(auto, 16px, var(--green-300));
+        }
+      }
+    }
+  }
+  .parking-link {
+    .location {
+      @include svg-adjust(auto, 20px, var(--blue-400))
+    }
+  }
+}
+
+.break-line {
+  display: block;
+  width: 100%;
+  height: 10px;
+  // border: 1px solid black;
+  background-color: var(--grey-200);
+}

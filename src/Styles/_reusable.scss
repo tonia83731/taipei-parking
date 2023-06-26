@@ -1,0 +1,39 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.btn {
+  @include size-adjust(60px, 60px);
+  // border: 1px solid black;
+  border-radius: 50px;
+  // font-size: 20px;
+  // color: var(--blue-400);
+  background-color: var(--grey-100);
+  /* shadow */
+  box-shadow: var(--box-shadow);
+
+  &:hover {
+    background-color: var(--grey-200);
+  }
+}
+// .btn-green{
+//   background-color: var(--green-250);
+//   color: var(--white);
+//   box-shadow: var(--box-shadow);
+// }
+
+.title {
+  @include font-adjust(20px, 700);
+  margin-bottom: 0.5em;
+  color: var(--black-100);
+}
+
+@media screen and (min-width: 768px) {
+  // .btn {
+  //   font-size: 24px;
+  // }
+
+  .title {
+    font-size: 24px;
+  }
+}

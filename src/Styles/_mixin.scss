@@ -1,0 +1,20 @@
+@mixin size-adjust($width, $height) {
+  width: $width;
+  height: $height;
+  @content;
+}
+
+@mixin svg-adjust($width, $height, $color) {
+  svg {
+    @include size-adjust($width, $height);
+
+    path {
+      fill: $color;
+    }
+  }
+}
+
+@mixin font-adjust($size, $weight) {
+  font-size: $size;
+  font-weight: $weight;
+}
