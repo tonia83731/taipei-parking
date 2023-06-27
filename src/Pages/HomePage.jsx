@@ -10,9 +10,23 @@ import { Container, Row, Col } from "react-bootstrap";
 
 export default function HomePage(){
   return(
-    <Map>
-      <SearchBar/>
-      <ParkingList/>
-    </Map>
+    <>
+      <Map mode="mobile">
+        <Container>
+          <Row>
+            <Col md={12}>
+              <SearchBar/>
+              <ParkingList mode="mobile"/>
+            </Col>
+          </Row>
+        </Container>
+      </Map>
+      <Map mode="desktop">
+        <div className="side-menu">
+          <SearchBar/>
+          <ParkingList mode="desktop"/>
+        </div>
+      </Map>
+    </>
   )
 }

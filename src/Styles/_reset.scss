@@ -75,6 +75,26 @@ body {
   color: var(--black-80);
 }
 
+/* scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--grey-50);
+}
+
+/* handle */
+::-webkit-scrollbar-thumb {
+  background: var(--green-250);
+  border-radius: 50px;
+  &:hover{
+    background: var(--green-300);
+  }
+}
+
 @media screen and (min-width: 768px) {
   body {
     font-size: 18px;

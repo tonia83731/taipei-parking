@@ -2,9 +2,9 @@ import ParkingItem from "../ParkingItem/ParkingItem"
 import { ReactComponent as CrossIcon } from "../../Assets/CrossIcon.svg"
 
 
-export default function ParkingList() {
+export default function ParkingList({mode}) {
   return(
-    <div className="parking">
+    <section className="parking" data-mode={mode}>
       <button className="close-btn"><CrossIcon/></button>
       <ul className="parking-list">
         <ParkingItem/>
@@ -14,6 +14,6 @@ export default function ParkingList() {
         <ParkingItem/>
         <ParkingItem/>
       </ul>
-    </div>
+    </section>
   )
 }
