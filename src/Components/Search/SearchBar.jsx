@@ -1,7 +1,7 @@
 import { ReactComponent as SearchIcon } from "../../Assets/SearchIcon.svg"
 import { ReactComponent as TargetIcon } from "../../Assets/TargetIcon.svg"
 
-export default function SearchBar({onLocationSearch, onLocationInput, showCurrentLocation}){
+export default function SearchBar({mode, onLocationSearch, onLocationInput, showCurrentLocation}){
   return(
     <>
       <h5 className="page-title title">可以停哪裡?</h5>

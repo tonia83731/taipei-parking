@@ -1,6 +1,9 @@
+
 .page-title{
   padding: 0.5em 1em 0.2em;
 }
+
+
 
 .search{
   width: 100%;
@@ -65,10 +68,10 @@
         }
       }
 
-      .current-location-input:checked+.current-location-span {
-        font-weight: 700;
-        background-color: var(--green-300);
-      }
+      // .current-location-input:checked+.current-location-span {
+      //   font-weight: 700;
+      //   background-color: var(--green-300);
+      // }
 
     }
   }
@@ -100,28 +103,12 @@
       height: 55px;
       line-height: 55px;
 
-      // .search-btn[data-mode="mobile"] {
-      //   display: none;
-      // }
-      // .search-btn[data-mode="desktop"] {
-      //   display: block;
-      //   padding: 0.4em 1em;
-      //   background-color: var(--green-250);
-      //   color: var(--white);
-      //   font-size: 18px;
-      //   box-shadow: var(--box-shadow);
-      //   border-radius: 10px;
-
-      //   &:hover {
-      //     background-color: var(--green-300);
-      //   }
-      // }
-      .current-location {
+      .current-location { 
         .current-location-span {
           height: 55px;
           line-height: 55px;
-          font-size: 16px;
         }
+    
       }
       
     }

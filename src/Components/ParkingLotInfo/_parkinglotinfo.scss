@@ -1,3 +1,7 @@
+.info-container[data-mode="mobile"] {
+  
+}
+
 .parking-lot-info{
   .back-bar {
     display: block;
@@ -84,6 +88,9 @@
 }
 
 @media screen and (min-width: 768px) {
+  .info-container[data-mode="mobile"]{
+    display: none;
+  }
   .parking-lot-info{
     .back-bar {
       height: 60px;

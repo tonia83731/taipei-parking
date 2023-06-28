@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Taipei Parking Lots
 
+User are able to find parking lots near their current location. They could also scroll the map to find parking lots in other area in Taipei.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+This project is available on both mobile and desktop.
 
-### `npm start`
+* The app could show user's current location
+* The app could show available parking lots near user's location
+* The app could show available parking lots in Taipei city
+  * Parking lot information include name and address
+  * Parking lot information show if the parking lot still have availabe space
+  * Parking lot informatio show whether the parking lot have parking spot for Disabled and Pragnancy individual
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Demo Page Link
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Demo Feature (Mobile)
 
-### `npm test`
+## Demo Feature (Desktop)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Develp Environment and Tools
 
-### `npm run build`
+* node.js @14.18.1
+* react @18.2.0
+* react-router-dom @6.14.0
+* axios @0.27.2
+* sass @1.63.6
+* @react-google-maps/api @2.18.1
+* @googlemaps/markerclusterer
+* twd97-to-latlng @1.0.0
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the project to local, enter:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/tonia83731/taipei-parking.git
+```
 
-### `npm run eject`
+2. Go into the project(cd), later enter to install npm:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the project by enter:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. If you wish to end the project, enter:
 
-## Learn More
+```
+ctrl + c
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## For Future Development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This is for future development, will not include in current project
 
-### Code Splitting
+* User can see more detail information about each parking lot when click the list (phone, payment...)
+* User can get route from current location to the spot when click on button
+* User can know whether there's any charger for electric cars
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
