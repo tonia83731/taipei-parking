@@ -63,5 +63,6 @@ This is for future development, will not include in current project
 
 * User can see more detail information about each parking lot when click the list (phone, payment...)
 * User can get route from current location to the spot when click on button
+* User can know motor available parking lot
 * User can know whether there's any charger for electric cars
 

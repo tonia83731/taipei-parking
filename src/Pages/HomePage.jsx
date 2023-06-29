@@ -1,16 +1,17 @@
 // import {GoogleMap, useLoadScript, Marker} from '@react-google-maps'
 import Map from '../Components/Map/Map';
-import SearchBar from "../Components/Search/SearchBar";
-import ParkingList from '../Components/ParkingList/ParkingList';
-
-import MapTest from '../Components/Map/Maptest';
+import ParkingList from '../Components/ParkingList/ParkingList' ;
 
 
-import {useState, useEffect} from 'react'
+
+import {useState, useEffect, useMemo, useRef} from 'react'
+import { GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api"
+
+
 import { getParkingData, getAvailableSpace } from '../API/parking';
 
 
-import { Container, Row, Col } from "react-bootstrap";
+const libraries = ['places']
 
 const dummyParkingData = [
   {
@@ -62,53 +63,77 @@ const dummyAvailableData=[
 
 
 export default function HomePage(){
+  const {isLoaded} = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries,
+  })
 
+  // Center of Taipei => default center only render once
+  const defaultCenter = useMemo(() =>( {
+    lat: 25.033671,
+    lng: 121.564427
+  }), [])
 
+  const mapRef = useRef()
 
+  // Get center position (user position)
+  const [coords, setCoords] = useState(defaultCenter)
+  // Get all parking lots info
+  const [parkingData, setParkingData] = useState([])
+  // Get available parking lots info
+  const [availableData, setAvailableData] = useState([])
+  // Get parking lots near center position (surroundings, search)
+  const [visibleLots, setVisibleLosts] = useState([])
 
-  const [parkingData, setParkingData] = useState(dummyParkingData)
-  const [availableData, setAvailableData] = useState(dummyAvailableData)
+  // Parking icon user clicks (spot icon)
+  const [selected, setSelected] = useState(null)
 
-  
-  
+  const handleCurrentLocationClick = () => {
+
+  }
+  // render open data here 
   useEffect(() => {
-    const getParkingDataAsync = async() => {
+    const getParkingLots = async() => {
       try{
-        const data = await getParkingData()
-        // let parks = data.data.park
-        // setParkingData(parks.map((park) => ({...park})))
-      } catch(error){
+        const lotsInfo = await getParkingData()
+        const availableLots = await getAvailableSpace()
+
+        if(lotsInfo && availableLots) {
+          const availableId = new Set(availableLots.park.map((lot) => lot.id))
+          const parkingLots = lotsInfo.park.filter((parkLot) => {
+            return parkLot.totalcar > 0 && availableId.has(parkLot.id)
+          })
+
+          
+          let availableSpace = availableLots.park
+          setParkingData(parkingLots.map((parking) => ({...parking})))  
+          setAvailableData(availableSpace)
+          // console.log(parkingData)
+          // console.log(availableData)
+        }
+
+      } catch (error) {
         console.error(error)
       }
     }
-    const getAvailableSpaceAsync = async() => {
-      try{
-        const data = await getAvailableSpace()
-        let availables = data.data.park
-        setAvailableData(availables.map((available) => ({...available})))
-      } catch(error){
-        console.error(error)
-      }
-    }
-    getParkingDataAsync()
-    getAvailableSpaceAsync()
+    getParkingLots();
   }, [])
 
+
+
+  
+  if(!isLoaded) return <div>Loading...</div>
   return(
     <>
-      {/* <MapTest/> */}
-      <MapTest mode="mobile">
-        <div className="top-search">
-          <SearchBar/>
-        </div>
-        <ParkingList mode="mobile" props={parkingData}/>
-      </MapTest>
-      <MapTest mode="desktop">
-        <div className="side-menu">
-          <SearchBar/>
-          <ParkingList mode="desktop" props={parkingData}/>
-        </div>
-      </MapTest>
+      <div className="map-div" data-mode="mobile">
+        <ParkingList mobileClass="top-search" mode="mobile" props={parkingData} aprops={availableData} onCurrentLocationClick={handleCurrentLocationClick}/>
+        <Map/>
+      </div>
+
+      <div className="map-div" data-mode="desktop">
+        <ParkingList containerClass="side-menu" mode="desktop" props={parkingData} aprops={availableData}/>
+        <Map/>
+      </div>
     </>
   )
 }

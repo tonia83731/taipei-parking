@@ -1,7 +1,7 @@
 import Map from '../Components/Map/Map';
 import { Container, Row, Col } from "react-bootstrap";
 
-import MapTest from '../Components/Map/Maptest';
+import MapTest from '../Components/Map/Map';
 
 import ParkingLotInfo from '../Components/ParkingLotInfo/ParkingLotInfo';
 

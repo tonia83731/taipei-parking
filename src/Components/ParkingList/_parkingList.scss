@@ -52,6 +52,13 @@
   display: none;
 }
 
+.no-info{
+  text-align: center;
+  padding-top: 8em;
+  color: var(--black-60);
+  font-size: 18px;
+}
+
 
 @media screen and (min-width: 768px) {
   .parking[data-mode="mobile"] {
@@ -67,8 +74,14 @@
     }
     .parking-list {
       width: 100%;
-      height: 80vh;
+      height: 85vh;
       overflow-y: auto;
     }
+  }
+
+  .no-info {
+    text-align: center;
+    padding-top: 4em;
+    color: var(--black-60);
   }
 }
