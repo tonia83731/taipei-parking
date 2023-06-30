@@ -4,30 +4,10 @@ import { ReactComponent as CrossIcon } from "../../Assets/CrossIcon.svg"
 import {useState, useEffect, useRef, useMemo, useCallback} from "react"
 
 import SearchBar from "../Search/SearchBar";
+import ParkingLotInfo from "../ParkingLotInfo/ParkingLotInfo";
 
 
-export default function ParkingList({props, aprops, mode, containerClass, mobileClass,onCurrentLocationClick}) {
-  const [inputValue, setInputValue] = useState('')
-
-  const [isSearch, setIsSearch] = useState(false)
-
-  const handleLocationChange = (value) => {
-    setInputValue(value)
-  }
-  const handleLocationSearch = () => {
-    if(inputValue.length === 0) return
-
-    setIsSearch(true)
-
-  }
-  // console.log(props)
-  // console.log(aprops)
-
-  // const parkingLotsData = props.map((prop) => {
-  //   if(prop.id <= 10){
-  //     return <ParkingItem prop={prop} key={prop.id} aprops={aprops}/>
-  //   }
-  // })
+export default function ParkingList({props, aprops, mode, containerClass, mobileClass, inputValue, isSearch, onLocationChange, onLocationSearch, onCurrentLocationClick, onCurrentLotClick, onLocationKeyDown}) {
 
   return(
 
@@ -35,26 +15,21 @@ export default function ParkingList({props, aprops, mode, containerClass, mobile
         <div className={mobileClass}>
           <SearchBar 
             inputValue={inputValue} 
-            onLocationChange={handleLocationChange}
-            onLocationSearch={handleLocationSearch}
+            onLocationChange={onLocationChange}
+            onLocationKeyDown={onLocationKeyDown}
+            onLocationSearch={onLocationSearch}
             onCurrentLocationClick={onCurrentLocationClick}
             />
         </div>
         <section className="parking" data-mode={mode}>
           <button className="close-btn"><CrossIcon/></button>
           <ul className="parking-list">
-            {/* {isSearch ?
-              props.map((prop) => {
-                if(prop.id <= 10){
-                  return <ParkingItem prop={prop} key={prop.id} aprops={aprops}/>
-                }
-              })
-            : <div className="no-info">尚未搜尋任何資料</div>} */}
-             {props.map((prop) => {
-                if(prop.id <= 10){
-                  return <ParkingItem prop={prop} key={prop.id} aprops={aprops}/>
-                }
-              })}
+             {isSearch ? props.map((prop) => {
+                return <ParkingItem prop={prop} key={prop.id} aprops={aprops} onCurrentLotClick={onCurrentLotClick}/>
+              }) : 
+              <div className="no-info">尚未搜尋任何資料</div>
+              }
+              {/* {isToggle && <ParkingLotInfo prop={oneParkingInfo} aprops={aprops} onCloseInfoClick={() => {setIsToggle(false)}}/>} */}
           </ul>
         </section>
       </div>

@@ -8,6 +8,9 @@ import { ReactComponent as InfoIcon } from "../../Assets/InfoIcon.svg"
 import SplitStartAndEnd from '../../Utilities/SplitStartAndEnd'
 
 
+import { Link } from 'react-router-dom'
+
+
 // export default function ParkingItem(){
 
 //   return(
@@ -42,7 +45,7 @@ import SplitStartAndEnd from '../../Utilities/SplitStartAndEnd'
 //   )
 // }
 
-export default function ParkingItem({prop, aprops}){
+export default function ParkingItem({prop, aprops, onCurrentLotClick, onCurrentInfoClick}){
   // console.log(prop)
   const aprop = aprops.find((aprop) => aprop.id === prop.id)
   return(
@@ -53,7 +56,7 @@ export default function ParkingItem({prop, aprops}){
           <p className="address">地址: {prop.address}</p>
           <ul className="space">
             <li className="car">總停車位: <span>{prop.totalcar}</span></li>
-            <li className="car">剩餘空位: <span>{aprop.availablecar}</span></li>
+            <li className="car">剩餘空位: <span>{aprop.availablecar <= 0 ? "0" : aprop.availablecar}</span></li>
             {/* <li className="car">汽車剩餘停車位: <span className="remain">0</span> / {totalcar}</li>
             <li className="motor">機車剩餘停車位: <span className="remain">0</span> / {totalmotor}</li> */}
           </ul>
@@ -74,10 +77,10 @@ export default function ParkingItem({prop, aprops}){
             }
           </div>
         </div>
-        {/* <div className="parking-link">
-          <button className="info btn"><InfoIcon/></button>
-          <button className="location btn"><LocationArrowIcon/></button>
-        </div> */}
+        <div className="parking-link">
+          {/* <button className="info btn" onClick={onCurrentInfoClick} data-id={prop.id}><InfoIcon/></button> */}
+          <button className="location btn" onClick={onCurrentLotClick} data-id={prop.id}><LocationArrowIcon/></button>
+        </div>
       </li>
       <span className="break-line"></span>
     </>

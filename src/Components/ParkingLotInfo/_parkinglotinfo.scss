@@ -1,8 +1,18 @@
 .info-container[data-mode="mobile"] {
   
 }
+.parking{
+  position:relative;
+}
 
 .parking-lot-info{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--white);
+  
+
   .back-bar {
     display: block;
     width: 100%;

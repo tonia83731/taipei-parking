@@ -1,7 +1,7 @@
 // import {GoogleMap, useLoadScript, Marker} from '@react-google-maps'
 import Map from '../Components/Map/Map';
 import ParkingList from '../Components/ParkingList/ParkingList' ;
-
+import TransferLatLng from '../Utilities/TransferLatLng';
 
 
 import {useState, useEffect, useMemo, useRef} from 'react'
@@ -10,56 +10,9 @@ import { GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api"
 
 import { getParkingData, getAvailableSpace } from '../API/parking';
 
+import Swal from 'sweetalert2'
 
 const libraries = ['places']
-
-const dummyParkingData = [
-  {
-    id: "001",
-    name: "府前廣場地下停車場",
-    serviceTime: "00:00:00~23:59:59",
-    totalcar: 2043,
-    totalmotor: 1360,
-    Pregnancy_First : 40,
-    Handicap_First : 45,
-  },
-  {
-    id: "002",
-    name: "松壽廣場地下停車場",
-    serviceTime: "00:00:00~23:59:59",
-    totalcar: 455,
-    totalmotor: 0,
-    Pregnancy_First : 8,
-    Handicap_First : 9,
-  },
-  {
-    id: "003",
-    name: "臺北市災害應變中心地下停車場",
-    serviceTime: "00:00:00~23:59:59",
-    totalcar: 169,
-    totalmotor: 200,
-    Pregnancy_First : 3,
-    Handicap_First : 5,
-  },
-]
-
-const dummyAvailableData=[
-  {
-    id: "001",
-    availablecar: 261,
-    availablemotor: 111
-  },
-  {
-    id: "002",
-    availablecar: 2,
-    availablemotor: -9
-  },
-  {
-    id: "003",
-    availablecar: 9,
-    availablemotor: 58
-  },
-]
 
 
 export default function HomePage(){
@@ -77,7 +30,8 @@ export default function HomePage(){
   const mapRef = useRef()
 
   // Get center position (user position)
-  const [coords, setCoords] = useState(defaultCenter)
+  // const [coords, setCoords] = useState(defaultCenter)
+  const [currentPosition, setCurrentPosition] = useState(defaultCenter)
   // Get all parking lots info
   const [parkingData, setParkingData] = useState([])
   // Get available parking lots info
@@ -88,9 +42,77 @@ export default function HomePage(){
   // Parking icon user clicks (spot icon)
   const [selected, setSelected] = useState(null)
 
-  const handleCurrentLocationClick = () => {
-
+  // search input
+  const [inputValue, setInputValue] = useState('')
+  // user click search button or not
+  const [isSearch, setIsSearch] = useState(false)
+  
+  const handleLocationChange = (e) => {
+    setInputValue(e.target.value)
   }
+  const handleLocationKeyDown = (e) => {
+    if(inputValue === "") return
+    if(e.key === 'Enter'){
+      const value = inputValue.trim().toLowerCase()
+      const searchParkingLot = parkingData.filter((lots) => {
+        return lots.name.includes(value) || lots.area.includes(value)
+      })
+      // console.log(searchParkingLot)
+      setVisibleLosts(searchParkingLot)
+      // console.log(visibleLots)
+      setIsSearch(true)
+      setInputValue('')
+    }
+  }
+  const handleLocationSearch = (e) => {
+    e.preventDefault()
+    // console.log('click')
+    if(inputValue === "") return
+    const value = inputValue.trim().toLowerCase()
+    const searchParkingLot = parkingData.filter((lots) => {
+      return lots.name.includes(value) || lots.area.includes(value)
+    })
+    // console.log(searchParkingLot)
+    setVisibleLosts(searchParkingLot)
+    setIsSearch(true)
+    setInputValue('')
+    
+  }
+  
+
+  const handleCurrentLocationClick = (e) => {
+    e.preventDefault()
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCurrentPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+    })
+  }
+
+  const handleCurrentLotClick = (e) => {
+    e.preventDefault()
+    const id = e.target.dataset.id
+    const parkingLot = parkingData.find((lot) => lot.id === id)
+    console.log(parkingLot)
+    if(parkingLot === undefined){
+       Swal.fire({
+        position: 'middle',
+        title: '目前無法獲得此停車場資料!',
+        text: '請稍後再嘗試!',
+        icon: 'warning',
+        timer: 1000,
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+      return 
+    }
+    const x = parkingLot.tw97x
+    const y = parkingLot.tw97y
+    const parkinglotLatLng = TransferLatLng(x, y)
+    setCurrentPosition(parkinglotLatLng)
+  }
+
   // render open data here 
   useEffect(() => {
     const getParkingLots = async() => {
@@ -119,20 +141,45 @@ export default function HomePage(){
     getParkingLots();
   }, [])
 
-
-
   
   if(!isLoaded) return <div>Loading...</div>
   return(
     <>
       <div className="map-div" data-mode="mobile">
-        <ParkingList mobileClass="top-search" mode="mobile" props={parkingData} aprops={availableData} onCurrentLocationClick={handleCurrentLocationClick}/>
-        <Map/>
+        <ParkingList 
+          mobileClass="top-search" 
+          mode="mobile" 
+          props={visibleLots} 
+          aprops={availableData} 
+          inputValue={inputValue}
+          isSearch={isSearch}
+          onLocationChange={handleLocationChange}
+          onLocationKeyDown={handleLocationKeyDown}
+          onLocationSearch={handleLocationSearch}
+          onCurrentLocationClick={handleCurrentLocationClick}
+          onCurrentLotClick={handleCurrentLotClick}
+          />
+        <Map currentPosition={currentPosition}/>
       </div>
 
       <div className="map-div" data-mode="desktop">
-        <ParkingList containerClass="side-menu" mode="desktop" props={parkingData} aprops={availableData}/>
-        <Map/>
+        <ParkingList 
+          containerClass="side-menu" 
+          mode="desktop" 
+          props={visibleLots} 
+          aprops={availableData}
+          inputValue={inputValue}
+          isSearch={isSearch}
+          onLocationChange={handleLocationChange}
+          onLocationKeyDown={handleLocationKeyDown}
+          onLocationSearch={handleLocationSearch}
+          onCurrentLocationClick={handleCurrentLocationClick}
+          onCurrentLotClick={handleCurrentLotClick}
+          />
+        <Map 
+          currentPosition={currentPosition}
+          props={parkingData}
+          />
       </div>
     </>
   )
