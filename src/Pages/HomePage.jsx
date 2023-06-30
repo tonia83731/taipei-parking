@@ -93,12 +93,14 @@ export default function HomePage(){
   const handleCurrentLotClick = (e) => {
     e.preventDefault()
     const id = e.target.dataset.id
-    const parkingLot = parkingData.find((lot) => lot.id === id)
+    console.log(id)
+    const parkingLot = parkingData?.find((lot) => lot.id === id)
     console.log(parkingLot)
+    
     if(parkingLot === undefined){
        Swal.fire({
         position: 'middle',
-        title: '目前無法獲得此停車場資料!',
+        title: '無法獲得此停車場資料!',
         text: '請稍後再嘗試!',
         icon: 'warning',
         timer: 1000,

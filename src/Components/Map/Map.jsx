@@ -6,11 +6,12 @@ import TransferLatLng from "../../Utilities/TransferLatLng"
 
 import { getParkingData, getAvailableSpace } from '../../API/parking';
 
+import Swal from 'sweetalert2'
 
 // import SearchBar from "../Search/SearchBar";
 // import ParkingList from '../ParkingList/ParkingList';
 
-export default function Map({currentPosition, props}){
+export default function Map({currentPosition, props, onParkingMarkerClick}){
   const [inputValue, setInputValue] = useState('')
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongtitude] = useState('')
@@ -78,7 +79,18 @@ export default function Map({currentPosition, props}){
       // console.log(position.coords.longitude)
       setLatitude(position.coords.latitude)
       setLongtitude(position.coords.longitude)
-    })
+    },
+    () => {
+      Swal.fire({
+        position: 'middle',
+        text: '允許存取使用者位置來使用此功能',
+        icon: 'warning',
+        // timer: 1000,
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    }
+    )
   }, [])
 
   const onLoad = useCallback(map => (mapRef.current = map), [])
@@ -105,6 +117,7 @@ export default function Map({currentPosition, props}){
             <MarkerF 
               key={parking.id} 
               position={position}
+              onClick={onParkingMarkerClick}
             />
           )})
         }
