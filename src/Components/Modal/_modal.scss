@@ -1,0 +1,60 @@
+.modal {
+  position: relative;
+
+  .modal-body {
+    width: 80%;
+    background-color: var(--grey-50);
+    border-radius: 10px;
+    padding: 0.8em;
+
+    .modal-title {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .remain {
+      font-weight: 700;
+      // margin-bottom: 0.5em;
+    }
+
+    .payex {
+      font-size: 14px;
+      font-weight: 600px;
+    }
+  }
+
+  .modal-triangle-down {
+    // text-align:center;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 25px solid var(--grey-50);
+
+    position: absolute;
+    bottom: -22px;
+    left: 40%;
+    transform: translatex(-50%);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    .modal-body {
+      width: 30%;
+
+      .modal-title {
+        font-size: 20px;
+      }
+
+      .payex {
+        font-size: 16px;
+      }
+    }
+
+    .modal-triangle-down {
+      left: 15%;
+      transform: translatex(-50%);
+    }
+  }
+}

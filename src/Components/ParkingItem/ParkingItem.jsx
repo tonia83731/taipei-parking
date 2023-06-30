@@ -2,13 +2,8 @@
 // import { ReactComponent as ShareIcon } from "../../Assets/ShareIcon.svg"
 import { ReactComponent as CheckIcon } from "../../Assets/CheckIcon.svg"
 import { ReactComponent as LocationArrowIcon } from "../../Assets/LocationArrowIcon.svg"
-import { ReactComponent as InfoIcon } from "../../Assets/InfoIcon.svg"
-
-/* import time convert here */
-import SplitStartAndEnd from '../../Utilities/SplitStartAndEnd'
 
 
-import { Link } from 'react-router-dom'
 
 
 // export default function ParkingItem(){
