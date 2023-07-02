@@ -74,7 +74,7 @@ export default function ParkingItem({prop, aprops, onCurrentLotClick, onCurrentI
         </div>
         <div className="parking-link">
           {/* <button className="info btn" onClick={onCurrentInfoClick} data-id={prop.id}><InfoIcon/></button> */}
-          <button className="location btn" onClick={onCurrentLotClick} data-id={prop.id}><LocationArrowIcon/></button>
+          <button className="location btn" onClick={() => {onCurrentLotClick?.(prop.id)}} data-id={prop.id}><LocationArrowIcon/></button>
         </div>
       </li>
       <span className="break-line"></span>

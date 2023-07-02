@@ -1,7 +1,7 @@
 import { ReactComponent as SearchIcon } from "../../Assets/SearchIcon.svg"
 import { Autocomplete } from "@react-google-maps/api"
 
-export default function SearchBar({inputValue, onLocationChange, onLocationSearch,onCurrentLocationClick, onLocationKeyDown}){
+export default function SearchBar({inputValue, onLocationChange, onLocationSearch,onCurrentLocationClick, onLocationKeyDown, onAutocompleteLoad, onAutocompletePlaceChange}){
 
   const options = {
     componentRestrictions:{country: 'tw'},
@@ -11,6 +11,8 @@ export default function SearchBar({inputValue, onLocationChange, onLocationSearc
       <form action="" className="search">
         <Autocomplete
           options={options}
+          onLoad={onAutocompleteLoad}
+          onPlaceChange={onAutocompletePlaceChange}
         >
           <input type="text" className="search-input" placeholder="請輸入地址..." id="search-input" value={inputValue} onChange={onLocationChange} onKeyDown={onLocationKeyDown}/>
         </Autocomplete>
