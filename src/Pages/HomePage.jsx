@@ -170,9 +170,7 @@ export default function HomePage(){
   // 搜尋後按下ParkingItem => location btn 將目前位置顯示於地圖中心
   // 搜尋後按下ParkingItem => location btn 顯示目前停車場資訊
   const handleCurrentLotClick = (id) => {
-    const parkingLot = parkingData?.find((lot) => lot.id === id)
-    console.log(parkingLot)
-    
+    const parkingLot = parkingData?.find((lot) => lot.id === id)   
     if(parkingLot === undefined){
        Swal.fire({
         position: 'middle',
@@ -191,15 +189,6 @@ export default function HomePage(){
     setCurrentPosition(parkinglotLatLng)
   }
 
-
-  // 用 useRef 與 useCallback 儲存 Google Map 實例
-  // const onLoad = useCallback((map) => {
-  //   mapRef.current = map;
-  // }, [])
-  // 儲存map目前顯示狀態 // ******
-  
-
-
   // ---------------------- GET data from Open Data (UseEffect) -----------------------
   // 渲染Open data 停車場資訊 及 剩餘位置資訊
   useEffect(() => {
@@ -215,9 +204,7 @@ export default function HomePage(){
           let availableSpace = availableLots.park
           setParkingData(parkingLots.map((parking) => ({...parking})))  
           setAvailableData(availableSpace)
-
         }
-
       } catch (error) {
         console.error(error)
       }
@@ -249,6 +236,7 @@ export default function HomePage(){
           mapRef={mapRef}
           coords={coords}
           currentPosition={currentPosition}
+          setCurrentPosition={setCurrentPosition}
           onLoad={onLoad}
           map={map}
           setMap={setMap}
@@ -279,6 +267,7 @@ export default function HomePage(){
           mapRef={mapRef}
           coords={coords}
           currentPosition={currentPosition}
+          setCurrentPosition={setCurrentPosition}
           onLoad={onLoad}
           map={map}
           setMap={setMap}

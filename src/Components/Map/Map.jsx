@@ -18,7 +18,8 @@ export default function Map({
   map, 
   setMap,
   coords,
-  currentPosition, 
+  currentPosition,
+  setCurrentPosition, 
   parkingData,
   availableData, 
   visibleLots,
@@ -95,6 +96,7 @@ export default function Map({
         infoWindow.open(map, marker)
         setCurrentInfoWindow(infoWindow)
         setSelected(selectedMarker)
+        setCurrentPosition(TransferLatLng(parkingLot.tw97x, parkingLot.tw97y))
       })
       return marker
     })
