@@ -5,8 +5,7 @@ import { getParkingData, getAvailableSpace } from '../API/parking';
 
 
 import {useState, useEffect, useMemo, useRef, useCallback} from 'react'
-import { GoogleMap, useLoadScript, MarkerF, Autocomplete} from "@react-google-maps/api"
-import { MarkerClusterer, SuperClusterAlgorithm } from '@googlemaps/markerclusterer';
+import { useLoadScript, Autocomplete} from "@react-google-maps/api"
 import TransferLatLng from '../Utilities/TransferLatLng';
 import Swal from 'sweetalert2'
 
@@ -26,7 +25,6 @@ export default function HomePage(){
   }), [])
 
   const mapRef = useRef()
-  // console.log(mapRef)
   const autoCompleteRef = useRef(null)
 
   // Get center position
@@ -53,6 +51,18 @@ export default function HomePage(){
   const [inputValue, setInputValue] = useState('')
   // user click search button or not
   const [isSearch, setIsSearch] = useState(false)
+
+  // 地圖加載後進行初始化操作
+  // const handleMapLoad = useCallback((map) => {
+  //   mapRef.current = map
+  //   setMap(map)
+  //   map.setZoom(16)
+  //   map.setCenter(coords)
+  //   // onLoad(map)
+  // }, [])
+  const onLoad = useCallback((map) => {
+    mapRef.current = map;
+  })
 
 
   // ---------------------------- Search Area Break -----------------------------
@@ -108,40 +118,41 @@ export default function HomePage(){
   const handleCurrentLocationClick = (e) => {
     e.preventDefault()
     const map = mapRef.current
+    // 使用者目前位置經緯度
     navigator.geolocation.getCurrentPosition(
       (position) => {
-      // setCurrentPosition({
-      //   lat: position.coords.latitude,
-      //   lng: position.coords.longitude
-      // })
       const userPosition = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
       map?.setCenter(userPosition)
+      // 設定地圖中心位置 default 為台北市中心
       setCurrentPosition(userPosition)
-      // setShowPosition(true)
 
-      const radius = 0.001 //(約280公尺)
-      const userLat = position.coords.latitude
-      const userLng = position.coords.longitude
-      const northEast = new window.google.maps.LatLng(
-        userLat + radius,
-        userLng + radius
-      )
-      const southWest = new window.google.maps.LatLng(
-        userLat + radius,
-        userLng + radius
-      )
-      const bounds = new window.google.maps.LatLngBounds(
-        southWest, northEast
-      )
-      map.fitBounds(bounds)
-      const visibleLots = parkingData.filter((parkingLot) => {
-        const {lat, lng} = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y)
-        return bounds.contains(new window.google.maps.LatLng(lat,lng))
-      })
-      setVisibleLots(visibleLots)
+      // const radius = 1 //(約280公尺)
+      // const userLat = position.coords.latitude
+      // const userLng = position.coords.longitude
+      // const northEast = new window.google.maps.LatLng(
+      //   userLat,
+      //   userLng
+      // )
+      // const southWest = new window.google.maps.LatLng(
+      //   userLat,
+      //   userLng
+      // )
+      // const bounds = new window.google.maps.LatLngBounds(
+      //   southWest, northEast
+      // )
+      // // console.log(bounds)
+
+      // // 將需要看到的區域經緯度放到該函式，就能將視角移到指定區域參數
+      // map.fitBounds(bounds)
+      // const visibleLots = parkingData.filter((parkingLot) => {
+      //   const {lat, lng} = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y)
+      //   return bounds.contains(new window.google.maps.LatLng(lat,lng))
+      // })
+      // console.log(visibleLots)
+      // setVisibleLots(visibleLots)
     },
     () => {
       Swal.fire({
@@ -182,17 +193,11 @@ export default function HomePage(){
 
 
   // 用 useRef 與 useCallback 儲存 Google Map 實例
-  const onLoad = useCallback((map) => {
-    mapRef.current = map;
-  })
+  // const onLoad = useCallback((map) => {
+  //   mapRef.current = map;
+  // }, [])
   // 儲存map目前顯示狀態 // ******
-  const handleMapLoad = useCallback((map) => {
-    mapRef.current = map
-    setMap(map)
-    map.setZoom(16)
-    map.setCenter(coords)
-    onLoad(map)
-  })
+  
 
 
   // ---------------------- GET data from Open Data (UseEffect) -----------------------
@@ -230,7 +235,6 @@ export default function HomePage(){
           mode="mobile" 
           props={searchData} 
           aprops={availableData}
-          // onLoad={onLoad} 
           inputValue={inputValue}
           isSearch={isSearch}
           onLocationChange={handleLocationChange}
@@ -242,14 +246,17 @@ export default function HomePage(){
           onAutocompletePlaceChange={handleAutocompletePlaceChange}
           />
         <Map 
+          mapRef={mapRef}
           coords={coords}
           currentPosition={currentPosition}
-          onMapLoad={handleMapLoad}
+          onLoad={onLoad}
+          map={map}
+          setMap={setMap}
           parkingData={parkingData}
           availableData={availableData}
           visibleLots={visibleLots}
           setVisibleLots={setVisibleLots}
-        />
+          />
       </div>
 
       <div className="map-div" data-mode="desktop">
@@ -269,9 +276,12 @@ export default function HomePage(){
           onAutocompletePlaceChange={handleAutocompletePlaceChange}
           />
         <Map 
+          mapRef={mapRef}
           coords={coords}
           currentPosition={currentPosition}
-          onMapLoad={handleMapLoad}
+          onLoad={onLoad}
+          map={map}
+          setMap={setMap}
           parkingData={parkingData}
           availableData={availableData}
           visibleLots={visibleLots}
