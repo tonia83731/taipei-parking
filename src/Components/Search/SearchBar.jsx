@@ -2,10 +2,11 @@ import { ReactComponent as SearchIcon } from "../../Assets/SearchIcon.svg"
 import { Autocomplete } from "@react-google-maps/api"
 
 export default function SearchBar({inputValue, onLocationChange, onLocationSearch,onCurrentLocationClick, onLocationKeyDown, onAutocompleteLoad, onAutocompletePlaceChange}){
-
+  // const autoCompleteRef = useRef(null)
   const options = {
     componentRestrictions:{country: 'tw'},
   }
+
   return(
     <>
       <form action="" className="search">

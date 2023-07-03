@@ -70,10 +70,29 @@ export default function HomePage(){
     autoCompleteRef.current = autoComplete
   }
   const codeAddress = () => {
-    
+    if(inputValue.trim() === "") return
+    const geocoder = new window.google.maps.Geocoder()
+    geocoder.geocode({address: inputValue}, (results, status) => {
+      if(status === 'OK'){
+        map?.setCenter(results[0].geometry.location)
+      } else{
+        console.log('error')
+        console.log(`Geocode + ${status}`)
+      }
+    })
   }
   const handleAutocompletePlaceChange = () => {
-    
+    if(autoCompleteRef.current !== null){
+      const place = autoCompleteRef?.current.getPlace()
+      if(place && place.geometry && place.geometry.location){
+        const lat = place.geometry.location.lat()
+        const lng = place.geometry.location.lng()
+        setInputValue(place.name)
+        map?.setCenter({lat, lng})
+      } else{
+        codeAddress()
+      }
+    }
   }
   // 輸入搜尋關鍵字
   const handleLocationChange = (e) => {
@@ -88,6 +107,7 @@ export default function HomePage(){
       const searchParkingLot = parkingData.filter((lots) => {
         return lots.name.includes(value) || lots.area.includes(value)
       })
+      handleAutocompletePlaceChange()
       // console.log(searchParkingLot)
       setSearchData(searchParkingLot)
       // console.log(visibleLots)
@@ -105,8 +125,9 @@ export default function HomePage(){
     const searchParkingLot = parkingData.filter((lots) => {
       return lots.name.includes(value) || lots.area.includes(value)
     })
-    console.log(searchParkingLot)
     // console.log(searchParkingLot)
+    // console.log(searchParkingLot)
+    handleAutocompletePlaceChange()
     setSearchData(searchParkingLot)
     setIsSearch(true)
     setInputValue('')
