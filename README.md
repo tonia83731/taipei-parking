@@ -19,6 +19,9 @@ This project is available on both mobile and desktop.
 https://tonia83731.github.io/taipei-parking/
 
 ## Demo Feature (Mobile)
+(Number description same as Demo Feature (Desktop))
+
+![Alt text](src/MarkDown/Taipei_parking_mobile-02.png)
 
 ## Demo Feature (Desktop)
 
