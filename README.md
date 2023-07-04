@@ -20,6 +20,15 @@ This project is available on both mobile and desktop.
 
 ## Demo Feature (Desktop)
 
+1. When first landing Remind user to turn on map navigation in order to get current location while click on "目前位置"
+2. The user first center location will be Center Taipei and the Parking lot around
+3. User Could click on "P" icon to get the parking lot name and available spot
+4. When click on "目前位置", the map will guild you to your current location with a "Car" icon
+5. Input parking lot name or region to get the list of parking lot, the map will also center the position
+6. The list will show parking lot name, address, total spot, available spot, and pregnancy/disable avilable
+
+![Alt text](src/MarkDown/Taipei_parking_desktop.png)
+
 ## Develp Environment and Tools
 
 * node.js @14.18.1
