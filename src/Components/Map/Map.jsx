@@ -24,6 +24,7 @@ export default function Map({
   // const [inputValue, setInputValue] = useState('')
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongtitude] = useState("");
+  const [userCenter, setUserCenter] = useState("")
 
   // 當地圖停止托拽時為true
   const [isMapIdle, setIsMapIdle] = useState(false);
@@ -34,10 +35,10 @@ export default function Map({
 
   // const [currentPosition, setCurrentPosition] = useState(defaultCenter)
 
-  const userCenter = {
-    lat: latitude,
-    lng: longitude,
-  };
+  // const userCenter = {
+  //   lat: latitude,
+  //   lng: longitude,
+  // };
   // <GoogleMap> 條件設定
   const options = useMemo(
     () => ({
@@ -107,6 +108,11 @@ export default function Map({
       (position) => {
         setLatitude(position.coords.latitude);
         setLongtitude(position.coords.longitude);
+        const initialUserCenter = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setUserCenter(initialUserCenter)
       },
       // 若未開啟位置追蹤，則跳出提示'允許存取使用者位置來使用此功能'
       () => {
