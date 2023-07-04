@@ -1,8 +1,48 @@
-/* import svg icons here */
-// import { ReactComponent as ShareIcon } from "../../Assets/ShareIcon.svg"
 import { ReactComponent as CheckIcon } from "../../Assets/CheckIcon.svg"
 import { ReactComponent as LocationArrowIcon } from "../../Assets/LocationArrowIcon.svg"
 
+export default function ParkingItem({
+  prop, 
+  aprops, 
+  onCurrentLotClick, 
+}){
+  const aprop = aprops.find((aprop) => aprop.id === prop.id)
+  return(
+    <>
+      <li className="parking-item">
+        <div className="parking-info">
+          <h5 className="name title">{prop.name}</h5>
+          <p className="address">地址: {prop.address}</p>
+          <ul className="space">
+            <li className="car">總停車位: <span>{prop.totalcar}</span></li>
+            <li className="car">剩餘空位: <span>{aprop.availablecar <= 0 ? "0" : aprop.availablecar}</span></li>
+          </ul>
+          <div className="other-info">
+            {
+              prop.Pregnancy_First > 0 &&
+              <span className="pregnancy">
+                <i className="icon"><CheckIcon/></i>
+                婦幼車位
+              </span>
+            }
+            {
+              prop.Handicap_First > 0 && 
+              <span className="handicap">
+                <i className="icon"><CheckIcon/></i>
+                殘障車位
+              </span>
+            }
+          </div>
+        </div>
+        <div className="parking-link">
+          {/* <button className="info btn" onClick={onCurrentInfoClick} data-id={prop.id}><InfoIcon/></button> */}
+          <button className="location btn" onClick={() => {onCurrentLotClick?.(prop.id)}} data-id={prop.id}><LocationArrowIcon/></button>
+        </div>
+      </li>
+      <span className="break-line"></span>
+    </>
+  )
+}
 
 
 
@@ -39,45 +79,3 @@ import { ReactComponent as LocationArrowIcon } from "../../Assets/LocationArrowI
 //     </>
 //   )
 // }
-
-export default function ParkingItem({prop, aprops, onCurrentLotClick, onCurrentInfoClick}){
-  // console.log(prop)
-  const aprop = aprops.find((aprop) => aprop.id === prop.id)
-  return(
-    <>
-      <li className="parking-item">
-        <div className="parking-info">
-          <h5 className="name title">{prop.name}</h5>
-          <p className="address">地址: {prop.address}</p>
-          <ul className="space">
-            <li className="car">總停車位: <span>{prop.totalcar}</span></li>
-            <li className="car">剩餘空位: <span>{aprop.availablecar <= 0 ? "0" : aprop.availablecar}</span></li>
-            {/* <li className="car">汽車剩餘停車位: <span className="remain">0</span> / {totalcar}</li>
-            <li className="motor">機車剩餘停車位: <span className="remain">0</span> / {totalmotor}</li> */}
-          </ul>
-          <div className="other-info">
-            {
-              prop.Pregnancy_First > 0 &&
-              <span className="pregnancy">
-                <i className="icon"><CheckIcon/></i>
-                婦幼車位
-              </span>
-            }
-            {
-              prop.Handicap_First > 0 && 
-              <span className="handicap">
-                <i className="icon"><CheckIcon/></i>
-                殘障車位
-              </span>
-            }
-          </div>
-        </div>
-        <div className="parking-link">
-          {/* <button className="info btn" onClick={onCurrentInfoClick} data-id={prop.id}><InfoIcon/></button> */}
-          <button className="location btn" onClick={() => {onCurrentLotClick?.(prop.id)}} data-id={prop.id}><LocationArrowIcon/></button>
-        </div>
-      </li>
-      <span className="break-line"></span>
-    </>
-  )
-}

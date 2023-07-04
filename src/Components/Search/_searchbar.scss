@@ -79,28 +79,3 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-  .search {
-    height: 55px;
-    line-height: 55px;
-    .search-input {
-      height: 55px;
-      line-height: 55px;
-      font-size: 18px;
-      &::placeholder {
-        font-size: 14px;
-      }
-    }
-    .btn-group {
-      grid-template-columns: 1fr 1.5fr;
-      height: 55px;
-      line-height: 55px;
-
-      .current-location { 
-        height: 55px;
-        line-height: 55px;
-      }
-      
-    }
-  }
-}

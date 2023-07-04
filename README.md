@@ -28,7 +28,7 @@ This project is available on both mobile and desktop.
 * axios @0.27.2
 * sass @1.63.6
 * @react-google-maps/api @2.18.1
-* @googlemaps/markerclusterer
+* @googlemaps/markerclusterer @2.3.1
 * twd97-to-latlng @1.0.0
 
 ## Getting Start

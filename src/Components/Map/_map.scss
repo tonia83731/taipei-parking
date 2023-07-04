@@ -3,27 +3,22 @@
   height: 100vh;
 }
 
-.map-div[data-mode="desktop"]{
-  display: none;
-}
-
-.map-div[data-mode="mobile"] {
+.map-div {
   display: grid;
-  grid-template-rows: 50vh 50vh;
+  grid-template-rows: 60vh 40vh;
 
-  position: relative;
-  .top-search{
-    z-index: 1;
-    position: absolute;
-    top: 1em;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 100%;
+  .side-menu{
+    .search{
+      z-index: 1;
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
   .map-container{
     grid-row: 1/2;
     height: 60vh;
-    // z-index: 100;
   }
 }
 
@@ -32,27 +27,66 @@
 
 
 @media screen and (min-width: 768px) {
+  .map-div {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 100vh;
+
+    .side-menu {
+      grid-column: 1/2;
+      .search {
+        all: unset;
+        display: grid;
+        grid-template-columns: 3fr 1.5fr;
+        grid-gap: 1em;
+        height: 55px;
+        line-height: 55px;
+        margin-top: 1.5em;
+        padding: 0 1em;
+        .search-input{
+          height: 55px;
+          line-height: 55px;
+          font-size: 18px;
+          &::placeholder{
+            font-size: 14px;
+          }
+        }
+        .btn-group{
+          grid-template-columns: 1fr 1.5fr;
+          height: 55px;
+          line-height: 55px;
+          .current-location{
+            height: 55px;
+            line-height: 55px;
+          }
+        }
+      }
+    }
+
+    .map-container {
+      grid-column: 2/3;
+      height: 100vh;
+    }
+  }
   // .side-menu {
   //   z-index: 1;
   //   padding-top: 2em;
   //   background-color: var(--white);
   // }
-  .map-div[data-mode="mobile"]{
-    display: none;
-  }
-  .map-div[data-mode="desktop"]{
-    // position: relative;
-    display: grid;
-    grid-template-columns: 4fr 8fr;
-    .side-menu{
-      // width: 45%;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      padding-top: 1em;
-      background-color: var(--white);
-    }
-  }
+
+  // .map-div[data-mode="desktop"]{
+  //   // position: relative;
+  //   display: grid;
+  //   grid-template-columns: 4fr 8fr;
+  //   .side-menu{
+  //     // width: 45%;
+  //     // position: absolute;
+  //     // top: 0;
+  //     // left: 0;
+  //     padding-top: 1em;
+  //     background-color: var(--white);
+  //   }
+  // }
   // .map-bg[data-mode="mobile"] {
   //   display: none;
   // }
@@ -83,12 +117,3 @@
 
 
 
-// @media screen and (min-width: 1200px) {
-
-
-//   .map-bg[data-mode="desktop"] {
-//     display: grid;
-//     grid-template-columns: 5fr 7fr;
-
-//   }
-// }

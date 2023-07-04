@@ -14,18 +14,3 @@ export default function Modal(){
     </div>
   )
 }
-
-// export default function Modal({prop, aprop}){
-//   return(
-//     <div className="modal">
-//       <div className="modal-body">
-//         <h5 className="modal-title">{prop.name}</h5>
-//         <p className="remain">目前剩餘{aprop.availablecar}個車位</p>
-//         <p className="payex">
-//           ({prop.payex})
-//         </p>
-//       </div>
-//       <div className="modal-triangle-down"></div>
-//     </div>
-//   )
-// }

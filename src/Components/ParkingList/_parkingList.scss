@@ -1,87 +1,27 @@
-.parking[data-mode="mobile"]{
+.parking{
   width: 100%;
   height: 40vh;
-  margin-top: 5.5em;
-  &:first-child{
-    text-align: end;
-  }
-  .close-btn{
-    @include svg-adjust(auto, 18px, var(--black-80));
-    padding: 1.2em 2em 0.8em;
-  }
   .parking-list{
     width: 100%;
-    height: 35vh;
+    height: 40vh;
     overflow-y: auto;
+    .no-info{
+      text-align: center;
+      margin-top: 1.5em;
+      color: var(--black-60);
+      font-size: 18px;
+    }
   }
-  // background-color: var(--white);
-  // border-radius: 10px 10px 0 0;
-
-  // position: absolute;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-
-
-  // // position: fixed;
-  // // left: 0;
-  // // right: 0;
-  // // bottom: 0;
-  // &:last-child{
-  //   text-align: right;
-  // }
-  // .close-btn{
-  //   @include svg-adjust(auto, 18px, var(--black-80));
-  //   padding: 1.2em 2em 1.6em;
-  //   // display: flex;
-  //   // align-items: center;
-  //   // justify-content: right;
-
-  //   &:hover{
-  //     @include svg-adjust(auto, 18px, var(--black-100));
-  //   }
-  // }
-  // .parking-list{
-  //   width: 100%;
-  //   height: 45vh;
-  //   overflow-y: auto;
-  // }
-}
-
-.parking[data-mode="desktop"] {
-  display: none;
-}
-
-.no-info{
-  text-align: center;
-  padding-top: 4em;
-  color: var(--black-60);
-  font-size: 18px;
+  
 }
 
 
 @media screen and (min-width: 768px) {
-  .parking[data-mode="mobile"] {
-    display: none;
-  }
-
-  .parking[data-mode="desktop"] {
-    display: block;
-    // background-color: var(--white);
-    margin-top: 2em;
-    .close-btn {
-      display: none;
-    }
-    .parking-list {
-      width: 100%;
+  .parking{
+    // height: 80vh;
+    .parking-list{
+      margin-top: 1.5em;
       height: 85vh;
-      overflow-y: auto;
     }
-  }
-
-  .no-info {
-    text-align: center;
-    padding-top: 2em;
-    color: var(--black-60);
   }
 }
