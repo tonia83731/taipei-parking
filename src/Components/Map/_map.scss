@@ -8,13 +8,7 @@
   grid-template-rows: 60vh 40vh;
 
   .side-menu{
-    .search{
-      z-index: 1;
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+    position: relative;
   }
   .map-container{
     grid-row: 1/2;

@@ -1,37 +1,42 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { GoogleMap, MarkerF } from "@react-google-maps/api";
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable no-new */
+/* eslint-disable array-callback-return */
+/* eslint-disable comma-dangle */
+/* eslint-disable react/prop-types */
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import { GoogleMap, MarkerF } from '@react-google-maps/api'
 import {
   MarkerClusterer,
-  SuperClusterAlgorithm,
-} from "@googlemaps/markerclusterer";
-import Swal from "sweetalert2";
+  SuperClusterAlgorithm
+} from '@googlemaps/markerclusterer'
+import Swal from 'sweetalert2'
 
-import TransferLatLng from "../../Utilities/TransferLatLng";
+import TransferLatLng from '../../Utilities/TransferLatLng'
 
-export default function Map({
+export default function Map ({
   mapRef,
   onLoad,
   map,
   setMap,
-  coords,
   currentPosition,
   setCurrentPosition,
   parkingData,
   availableData,
   visibleLots,
-  setVisibleLots,
+  setVisibleLots
 }) {
   // const [inputValue, setInputValue] = useState('')
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongtitude] = useState("");
-  const [userCenter, setUserCenter] = useState("")
+  // const [latitude, setLatitude] = useState("");
+  // const [longitude, setLongtitude] = useState("");
+  const [userCenter, setUserCenter] = useState('')
 
   // 當地圖停止托拽時為true
-  const [isMapIdle, setIsMapIdle] = useState(false);
-  const [currentInfoWindow, setCurrentInfoWindow] = useState(null);
+  const [isMapIdle, setIsMapIdle] = useState(false)
+  const [currentInfoWindow, setCurrentInfoWindow] = useState(null)
 
   // // Parking icon user clicks (spot icon)
-  const [selected, setSelected] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [selected, setSelected] = useState(null)
 
   // const [currentPosition, setCurrentPosition] = useState(defaultCenter)
 
@@ -45,44 +50,44 @@ export default function Map({
       disableDefaultUI: true,
       clickableIcons: false,
       zoomControl: true,
-      mapTypeControl: false,
+      mapTypeControl: false
     }),
     []
-  );
+  )
 
   const handleMapLoad = useCallback((map) => {
-    mapRef.current = map;
-    setMap(map);
+    mapRef.current = map
+    setMap(map)
     // map.setZomm(18)
     // map.setCenter(coords)
-    onLoad(map);
-    createMarkers(visibleLots);
-  }, []);
+    onLoad(map)
+    createMarkers(visibleLots)
+  }, [])
 
   const createMarkers = (visibleLots) => {
     const markers = visibleLots?.map((parkingLot) => {
-      const { lat, lng } = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y);
+      const { lat, lng } = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y)
       const marker = new window.google.maps.Marker({
         key: parkingLot.id,
         position: { lat, lng },
         icon: {
-          url: require("../../Assets/ParkingIcon.svg").default,
+          url: require('../../Assets/ParkingIcon.svg').default,
           scaledSize: new window.google.maps.Size(30, 30),
           origin: new window.google.maps.Point(0, 0),
           anchor: new window.google.maps.Point(15, 15),
-          zIndex: 1,
+          zIndex: 1
         },
-      });
-      console.log(marker);
-      const selectedMarker = parkingLot;
-      const infoWindow = new window.google.maps.InfoWindow();
+      })
+      // console.log(marker);
+      const selectedMarker = parkingLot
+      const infoWindow = new window.google.maps.InfoWindow()
 
-      marker.addListener("click", () => {
+      marker.addListener('click', () => {
         const selectedLot = availableData?.find((space) => {
           if (space.id === selectedMarker.id) {
-            return space;
+            return space
           }
-        });
+        })
         infoWindow.setContent(`
           <div className="modal">
             <div className="modal-body">
@@ -91,90 +96,94 @@ export default function Map({
               <p className="remain">目前剩餘${selectedLot.availablecar}個車位</p>
             </div>
           </div>
-        `);
-        infoWindow.open(map, marker);
-        setCurrentInfoWindow(infoWindow);
-        setSelected(selectedMarker);
-        setCurrentPosition(TransferLatLng(parkingLot.tw97x, parkingLot.tw97y));
-      });
-      return marker;
-    });
-    return markers;
-  };
+        `)
+        infoWindow.open(map, marker)
+        setCurrentInfoWindow(infoWindow)
+        setSelected(selectedMarker)
+        setCurrentPosition(TransferLatLng(parkingLot.tw97x, parkingLot.tw97y))
+      })
+      return marker
+    })
+    return markers
+  }
 
   // 顯示使用者目前定位(汽車標示)，一開始就顯示位置，點及則將目前位置至於中心
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLatitude(position.coords.latitude);
-        setLongtitude(position.coords.longitude);
+        // setLatitude(position.coords.latitude);
+        // setLongtitude(position.coords.longitude);
         const initialUserCenter = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
+          lng: position.coords.longitude
+        }
+        // console.log(initialUserCenter)
         setUserCenter(initialUserCenter)
+        // console.log(userCenter);
       },
       // 若未開啟位置追蹤，則跳出提示'允許存取使用者位置來使用此功能'
       () => {
         Swal.fire({
-          position: "middle",
-          text: "允許存取使用者位置來使用此功能",
-          icon: "warning",
+          position: 'middle',
+          text: '允許存取使用者位置來使用此功能',
+          icon: 'warning',
           showCloseButton: true,
-          showConfirmButton: false,
-        });
+          showConfirmButton: false
+        })
       }
-    );
-  }, []);
+    )
+  }, [])
+
+  // console.log(userCenter)
 
   // 使用者是否正在移動地圖
   useEffect(() => {
     if (map) {
       // 監聽地圖是否停止拖拽
-      const listener = map.addListener("idle", () => {
-        setIsMapIdle(true);
-      });
+      const listener = map.addListener('idle', () => {
+        setIsMapIdle(true)
+      })
       return () => {
-        window.google.maps.event.removeListener(listener);
-      };
+        window.google.maps.event.removeListener(listener)
+      }
     }
-  }, [map]);
+  }, [map])
 
   useEffect(() => {
     if (isMapIdle) {
       // 地圖停止拖拽 顯示以下資料
       // getBounds()返回當前視窗的東北/西南 經緯度
-      const bounds = map.getBounds();
+      const bounds = map.getBounds()
       const visibleLots = parkingData?.filter((parkingLot) => {
-        const { lat, lng } = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y);
-        return bounds.contains(new window.google.maps.LatLng(lat, lng));
-      });
-      const markers = createMarkers(visibleLots);
+        const { lat, lng } = TransferLatLng(parkingLot.tw97x, parkingLot.tw97y)
+        return bounds.contains(new window.google.maps.LatLng(lat, lng))
+      })
+      const markers = createMarkers(visibleLots)
       new MarkerClusterer({
         map,
         markers,
-        algorithm: new SuperClusterAlgorithm({ radius: 300 }),
-      });
+        algorithm: new SuperClusterAlgorithm({ radius: 300 })
+      })
 
-      setVisibleLots(visibleLots);
-      setIsMapIdle(false);
+      setVisibleLots(visibleLots)
+      setIsMapIdle(false)
     }
-  }, [isMapIdle]);
+  }, [isMapIdle])
 
   useEffect(() => {
     if (map) {
-      const clickListener = map.addListener("click", () => {
+      const clickListener = map.addListener('click', () => {
         if (currentInfoWindow) {
-          currentInfoWindow.close();
-          setCurrentInfoWindow(null);
-          setSelected(null);
+          currentInfoWindow.close()
+          setCurrentInfoWindow(null)
+          setSelected(null)
         }
-      });
+      })
       return () => {
-        window.google.maps.event.removeListener(clickListener);
-      };
+        window.google.maps.event.removeListener(clickListener)
+      }
     }
-  }, [map]);
+  }, [map])
 
   return (
     <>
@@ -189,18 +198,18 @@ export default function Map({
         <MarkerF
           position={userCenter}
           icon={{
-            url: require("../../Assets/CarIcon.svg").default,
+            url: require('../../Assets/CarIcon.svg').default,
             scaledSize: new window.google.maps.Size(50, 35),
             origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(15, 15),
+            anchor: new window.google.maps.Point(15, 15)
           }}
         />
         {/* {
         parkingData.map((parking) => {
           const position = TransferLatLng(parking.tw97x, parking.tw97y)
           return (
-            <MarkerF 
-              key={parking.id} 
+            <MarkerF
+              key={parking.id}
               position={position}
               onClick={(id) => onParkingMarkerClick?.(parking.id)}
               icon={{
@@ -214,5 +223,5 @@ export default function Map({
         } */}
       </GoogleMap>
     </>
-  );
+  )
 }
