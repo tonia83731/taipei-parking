@@ -1,20 +1,22 @@
 {
   "files": {
-    "main.css": "/taipei-parking/static/css/main.20d4bf03.css",
-    "main.js": "/taipei-parking/static/js/main.72822a62.js",
+    "main.css": "/taipei-parking/static/css/main.8d27c749.css",
+    "main.js": "/taipei-parking/static/js/main.7f7c3596.js",
     "static/js/787.85e30a21.chunk.js": "/taipei-parking/static/js/787.85e30a21.chunk.js",
     "static/media/CarIcon.svg": "/taipei-parking/static/media/CarIcon.21641426db7be63c45e46ea8fd762b66.svg",
+    "static/media/InfoIcon.svg": "/taipei-parking/static/media/InfoIcon.f1ecfd34ba93e883a213cb0e6d50d7d1.svg",
+    "static/media/BackArrowIcon.svg": "/taipei-parking/static/media/BackArrowIcon.8cc07fe487fb176de49c8fc5c79db3dc.svg",
     "static/media/CheckIcon.svg": "/taipei-parking/static/media/CheckIcon.f21c4344e84b3e9cc2c91fbba92acc2c.svg",
     "static/media/SearchIcon.svg": "/taipei-parking/static/media/SearchIcon.f5077b5ad9532356394dba66d01b29ce.svg",
     "static/media/ParkingIcon.svg": "/taipei-parking/static/media/ParkingIcon.8002180ab3b1badc07cc81e0ce7433b8.svg",
     "index.html": "/taipei-parking/index.html",
     "static/media/LocationArrowIcon.svg": "/taipei-parking/static/media/LocationArrowIcon.6daa74597463962dc40403146cc80af9.svg",
-    "main.20d4bf03.css.map": "/taipei-parking/static/css/main.20d4bf03.css.map",
-    "main.72822a62.js.map": "/taipei-parking/static/js/main.72822a62.js.map",
+    "main.8d27c749.css.map": "/taipei-parking/static/css/main.8d27c749.css.map",
+    "main.7f7c3596.js.map": "/taipei-parking/static/js/main.7f7c3596.js.map",
     "787.85e30a21.chunk.js.map": "/taipei-parking/static/js/787.85e30a21.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.20d4bf03.css",
-    "static/js/main.72822a62.js"
+    "static/css/main.8d27c749.css",
+    "static/js/main.7f7c3596.js"
   ]
 }
