@@ -29,7 +29,6 @@ export default function SearchBar ({
         >
           <SearchInput
             type="text"
-            className="search-input"
             placeholder="請輸入地址..."
             id="search-input"
             value={inputValue}
@@ -46,16 +45,6 @@ export default function SearchBar ({
           </CurrentLocationBtn>
         </SearchBtnGroup>
       </SearchForm>
-      {/* <form action="" className="search">
-        <div className="btn-group">
-          <button className="search-btn" onClick={onLocationSearch}>
-            <SearchIcon />
-          </button>
-          <button className="current-location" onClick={onCurrentLocationClick}>
-            目前位置
-          </button>
-        </div>
-      </form> */}
     </>
   )
 }

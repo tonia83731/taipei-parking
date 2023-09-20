@@ -2,6 +2,7 @@
 import Map from '../Components/Map/Map'
 import ParkingList from '../Components/ParkingList/ParkingList'
 import ParkingLotInfo from '../Components/ParkingLotInfo/ParkingLotInfo'
+import DirectionModal from '../Components/Modal/DirectionModal'
 import { getParkingData, getAvailableSpace } from '../API/parking'
 import TransferLatLng from '../Utilities/TransferLatLng'
 
@@ -34,6 +35,10 @@ export default function HomePage () {
   const [coords, setCoords] = useState(defaultCenter)
   // Get user position
   const [currentPosition, setCurrentPosition] = useState(defaultCenter)
+  const [enterUserPosition, setUserPosition] = useState('')
+  const [directions, setDirections] = useState('')
+  const [destination, setDestination] = useState('')
+  const [duration, setDuration] = useState('')
   // const [currentPosition, setCurrentPosition] = useState(null)
   // const [showPosition, setShowPosition] = useState(false)
   // Get all parking lots info
@@ -57,6 +62,8 @@ export default function HomePage () {
   const [isSearch, setIsSearch] = useState(false)
   // parking lot info toggle
   const [isToggle, setIsToggle] = useState(false)
+
+  const [directionToggle, setDirectionToggle] = useState(false)
 
   // 地圖加載後進行初始化操作
   const onLoad = useCallback((map) => {
@@ -147,7 +154,6 @@ export default function HomePage () {
         map?.setCenter(userPosition)
         // 設定地圖中心位置 default 為台北市中心
         setCurrentPosition(userPosition)
-
         // const radius = 1 //(約280公尺)
         // const userLat = position.coords.latitude
         // const userLng = position.coords.longitude
@@ -205,7 +211,33 @@ export default function HomePage () {
     const x = parkingLot.tw97x
     const y = parkingLot.tw97y
     const parkinglotLatLng = TransferLatLng(x, y)
-    setCurrentPosition(parkinglotLatLng)
+    // setCurrentPosition(parkinglotLatLng)
+    // console.log(parkinglotLatLng)
+    // console.log(enterUserPosition)
+    const service = new window.google.maps.DirectionsService()
+    service.route(
+      {
+        origin: enterUserPosition,
+        destination: parkinglotLatLng,
+        travelMode: window.google.maps.TravelMode.DRIVING
+      },
+      (result, status) => {
+        if (status === 'OK' && result) {
+          setDirections(result)
+          // console.log(result)
+          const destination = result.routes[0].legs[0].distance.text
+          const duration = result.routes[0].legs[0].duration.text
+          setDestination(destination)
+          setDuration(duration)
+        }
+      }
+    )
+    // console.log(directions)
+    // const distance = leg.distance.text
+    // const duration = leg.duration.text
+    // setDestination(distance)
+    // setDuration(duration)
+    setDirectionToggle(true)
   }
 
   const handleCurrentLotInfoClick = (id) => {
@@ -219,6 +251,9 @@ export default function HomePage () {
     setIsToggle(false)
   }
 
+  const handleCloseDirectionToggle = () => {
+    setDirectionToggle(false)
+  }
   // ---------------------- GET data from Open Data (UseEffect) -----------------------
   // 渲染Open data 停車場資訊 及 剩餘位置資訊
   useEffect(() => {
@@ -240,6 +275,31 @@ export default function HomePage () {
       }
     }
     getParkingLots()
+  }, [])
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // setLatitude(position.coords.latitude);
+        // setLongtitude(position.coords.longitude);
+        const initialUserCenter = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        // console.log(initialUserCenter)
+        setUserPosition(initialUserCenter)
+        // console.log(userCenter);
+      },
+      // 若未開啟位置追蹤，則跳出提示'允許存取使用者位置來使用此功能'
+      () => {
+        Swal.fire({
+          position: 'middle',
+          text: '允許存取使用者位置來使用此功能',
+          icon: 'warning',
+          showCloseButton: true,
+          showConfirmButton: false
+        })
+      }
+    )
   }, [])
   // ---------------------------- GET data from Open Data ----------------------------
 
@@ -270,6 +330,13 @@ export default function HomePage () {
             ></ParkingLotInfo>
           )}
         </ParkingList>
+        {directionToggle && (
+          <DirectionModal
+            onCloseDirectionModal={handleCloseDirectionToggle}
+            destination={destination}
+            duration={duration}
+          />
+        )}
         <Map
           mapRef={mapRef}
           coords={coords}
@@ -282,6 +349,7 @@ export default function HomePage () {
           availableData={availableData}
           visibleLots={visibleLots}
           setVisibleLots={setVisibleLots}
+          directions={directions}
         />
       </div>
     </>

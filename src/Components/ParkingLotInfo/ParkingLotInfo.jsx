@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable quotes */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
@@ -13,7 +14,7 @@ import styled from 'styled-components'
 
 export default function ParkingLotInfo ({ prop, aprops, onBackInfoClick }) {
   const aprop = aprops.find((aprop) => aprop.id === prop.id)
-  console.log(aprop)
+  // console.log(aprop)
   const chargeStation =
     aprop.ChargeStation === undefined ? "-" : aprop.ChargeStation
   console.log(chargeStation)
@@ -50,7 +51,13 @@ export default function ParkingLotInfo ({ prop, aprops, onBackInfoClick }) {
                   <th>車位總數</th>
                 </tr>
                 <tr>
-                  <td>{aprop.availablecar < 0 ? 0 : aprop.availablecar}</td>
+                  {aprop.availablecar <= 5 && prop.totalcar !== 0 ? (
+                    <Warning>
+                      {aprop.availablecar < 0 ? 0 : aprop.availablecar}
+                    </Warning>
+                  ) : (
+                    <td>{aprop.availablecar < 0 ? 0 : aprop.availablecar}</td>
+                  )}
                   <td>{prop.totalcar}</td>
                 </tr>
               </ParkingSpaceTable>
@@ -63,7 +70,15 @@ export default function ParkingLotInfo ({ prop, aprops, onBackInfoClick }) {
                   <th>車位總數</th>
                 </tr>
                 <tr>
-                  <td>{aprop.availablemotor < 0 ? 0 : aprop.availablemotor}</td>
+                  {aprop.availablemotor <= 5 && prop.totalmotor !== 0 ? (
+                    <Warning>
+                      {aprop.availablemotor < 0 ? 0 : aprop.availablemotor}
+                    </Warning>
+                  ) : (
+                    <td>
+                      {aprop.availablemotor < 0 ? 0 : aprop.availablemotor}
+                    </td>
+                  )}
                   <td>{prop.totalmotor}</td>
                 </tr>
               </ParkingSpaceTable>
@@ -72,12 +87,10 @@ export default function ParkingLotInfo ({ prop, aprops, onBackInfoClick }) {
               <ParkingSubTitle>電動車充電站</ParkingSubTitle>
               <ParkingSpaceTable>
                 <tr>
-                  <th>剩餘充電位</th>
                   <th>充電位總數</th>
                 </tr>
                 <tr>
-                  <td>0</td>
-                  <td>{prop.ChargingStation ? prop.ChargingStation : "--"}</td>
+                  <td>{prop.ChargingStation ? prop.ChargingStation : 0}</td>
                 </tr>
               </ParkingSpaceTable>
             </ParkingSapceInfoGroup>
@@ -87,19 +100,28 @@ export default function ParkingLotInfo ({ prop, aprops, onBackInfoClick }) {
     </ParkingLotInfoSection>
   )
 }
+
+const Warning = styled.td`
+  color: #e24134;
+  font-weight: 700;
+`
 const ParkingLotInfoSection = styled.section`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 40vh;
+  overflow-y: scroll;
+  @media screen and (min-width: 768px) {
+    min-height: 100vh;
+  }
 `
 const BackBar = styled.div`
   padding: 1em 0.5em;
   border-bottom: 1px solid #e9eaee;
 `
-const BackBarBtn = styled.button`
+export const BackBarBtn = styled.button`
   font-size: 16px;
   color: rgb(34, 34, 34, 0.6);
   &:hover {

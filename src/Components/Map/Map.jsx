@@ -4,7 +4,7 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { GoogleMap, MarkerF } from '@react-google-maps/api'
+import { GoogleMap, MarkerF, DirectionsRenderer } from '@react-google-maps/api'
 import {
   MarkerClusterer,
   SuperClusterAlgorithm
@@ -23,7 +23,8 @@ export default function Map ({
   parkingData,
   availableData,
   visibleLots,
-  setVisibleLots
+  setVisibleLots,
+  directions
 }) {
   // const [inputValue, setInputValue] = useState('')
   // const [latitude, setLatitude] = useState("");
@@ -54,7 +55,7 @@ export default function Map ({
     }),
     []
   )
-
+  // console.log(direction)
   const handleMapLoad = useCallback((map) => {
     mapRef.current = map
     setMap(map)
@@ -194,6 +195,18 @@ export default function Map ({
         options={options}
         onLoad={handleMapLoad}
       >
+        {directions && (
+          <DirectionsRenderer
+            directions={directions}
+            options={{
+              polylineOptions: {
+                zIndex: 50,
+                strokeColor: '#1D4777',
+                strokeWeight: 6
+              },
+            }}
+          />
+        )}
         {/* 使用者目前位置 */}
         <MarkerF
           position={userCenter}
@@ -201,7 +214,7 @@ export default function Map ({
             url: require('../../Assets/CarIcon.svg').default,
             scaledSize: new window.google.maps.Size(50, 35),
             origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(15, 15)
+            anchor: new window.google.maps.Point(15, 15),
           }}
         />
         {/* {
