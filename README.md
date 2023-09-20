@@ -13,6 +13,8 @@ This project is available on both mobile and desktop.
   * Parking lot information include name and address
   * Parking lot information show if the parking lot still have availabe space
   * Parking lot informatio show whether the parking lot have parking spot for Disabled and Pragnancy individual
+  * User could click on information icon to see detail information about the parking lot (include telephone number, service time, pay price and car, motor, chargin station number)
+  * User could click on arrow icon to see direction from user current location to the parking lot
 
 ## Demo Page Link
 
@@ -75,8 +77,5 @@ ctrl + c
 
 This is for future development, will not include in current project
 
-* User can see more detail information about each parking lot when click the list (phone, payment...)
-* User can get route from current location to the spot when click on button
-* User can know motor available parking lot
-* User can know whether there's any charger for electric cars
+* Maybe will include other city parking lot information future
 
