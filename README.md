@@ -66,7 +66,7 @@ npm install
 3. Start the project by enter:
 
 ```
-npm start
+npm run start
 ```
 
 4. If you wish to end the project, enter:
