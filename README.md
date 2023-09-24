@@ -23,7 +23,7 @@ https://tonia83731.github.io/taipei-parking/
 ## Demo Feature (Mobile)
 (Number description same as Demo Feature (Desktop))
 
-![Alt text](src/MarkDown/Taipei_parking_mobile-02.png)
+![Alt text](src/MarkDown/UI_look-01.png)
 
 ## Demo Feature (Desktop)
 
@@ -33,8 +33,10 @@ https://tonia83731.github.io/taipei-parking/
 4. When click on "目前位置", the map will guild you to your current location with a "Car" icon
 5. Input parking lot name or region to get the list of parking lot, the map will also center the position
 6. The list will show parking lot name, address, total spot, available spot, and pregnancy/disable avilable
+7. Click on arrow icon will show the direction, distance, duration from user current location to the parking lot
+8. Click on info icon will show the detail information about the parking lot include tel, open time , cost, description, car parking number, motor parking number and charging station
 
-![Alt text](src/MarkDown/Taipei_parking_desktop.png)
+![Alt text](src/MarkDown/UI_look-02.png)
 
 ## Develp Environment and Tools
 
